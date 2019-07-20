@@ -1,11 +1,14 @@
 language: c
+env:
+  - TOOL_NAME=kubeval TOOL_VERSION=0.12.0 TOOL_TEST_COMMAND='kubeval --version'
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git
   - . asdf/asdf.sh
 script:
-  - asdf plugin-add kubeval ./
-  - asdf list-all kubeval
-  - asdf plugin-test kubeval ./ --asdf-tool-version 0.7.0
+  - ./shellcheck-on-linux-only.sh
+  - asdf plugin-add $TOOL_NAME ./
+  - asdf list-all $TOOL_NAME
+  - asdf plugin-test $TOOL_NAME ./ "$TOOL_TEST_COMMAND" --asdf-tool-version $TOOL_VERSION
 os:
   - linux
   - osx
